@@ -1,0 +1,97 @@
+<div class="feed-container">
+  <h1>Meme Feed</h1>
+
+    <div class="feed-controls">
+
+    <!-- ROW 1 -->
+    <div class="controls-row top-row">
+        <app-ui-input
+        placeholder="Search memes..."
+        [(value)]="searchText"
+        (valueChange)="onSearchChange()">
+        </app-ui-input>
+
+        <app-ui-button
+        label="Create Meme"
+        (clicked)="openComposer()">
+        </app-ui-button>
+    </div>
+
+    <!-- ROW 2 -->
+    <div class="controls-row filters-row">
+        <app-ui-input
+        placeholder="Team"
+        [(value)]="selectedTeam"
+        (valueChange)="applyFilters()">
+        </app-ui-input>
+
+        <app-ui-input
+        placeholder="Mood"
+        [(value)]="selectedMood"
+        (valueChange)="applyFilters()">
+        </app-ui-input>
+
+        <app-ui-input
+        placeholder="Tags (comma separated)"
+        [(value)]="tagsInput"
+        (valueChange)="updateTags($event)">
+        </app-ui-input>
+    </div>
+
+    <!-- ROW 3 -->
+    <div class="controls-row bottom-row">
+        <app-ui-button
+        [label]="'Sort: ' + sortOrder"
+        (clicked)="toggleSort()">
+        </app-ui-button>
+
+        <app-ui-button
+        [label]="likedOnly ? 'Liked Only' : 'All Posts'"
+        (clicked)="toggleLiked()">
+        </app-ui-button>
+    </div>
+
+    </div>
+
+
+    <div class="posts-list">
+    <app-ui-card *ngFor="let post of filteredPosts" (click)="openPost(post)">
+  
+        <div class="post-header">
+        <strong>{{ post.author }}</strong>
+        <span>• {{ post.team }}
+
+        </span><span class="time">{{ timeAgo(post.createdAt) }}</span>
+        </div>
+
+        <h3 *ngIf="post.title">{{ post.title }}</h3>
+
+        <p class="preview">
+        {{ post.body }}
+        </p>
+
+        <div class="tags">
+        <app-ui-tag *ngFor="let tag of post.tags">
+            #{{ tag }}
+        </app-ui-tag>
+        </div>
+        <div class="mood">{{ post.mood }}</div>
+
+    </app-ui-card>
+    </div>
+    <app-post-detail
+        *ngIf="selectedPost"
+        [post]="selectedPost"
+        (close)="closePost()">
+    </app-post-detail>
+    <app-post-composer
+        *ngIf="showComposer"
+        [post]="editingPost"
+        (close)="closeComposer()">
+    </app-post-composer>
+    <app-ui-button
+        [label]="savedOnly ? 'Showing Saved' : 'Saved Only'"
+        (clicked)="toggleSaved()">
+    </app-ui-button>
+
+</div>

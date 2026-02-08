@@ -1,0 +1,59 @@
+<div class="overlay">
+  <div class="modal">
+
+    <div class="header">
+      <h2>{{ post.title || 'Meme Post' }}</h2>
+      <button class="close-btn" (click)="close.emit()">✖</button>
+    </div>
+
+    <div class="meta">
+      <strong>{{ post.author }}</strong> • {{ post.team }}
+    </div>
+
+    <!-- <p class="body">
+    </p> -->
+
+    <div class="body">
+    <ng-container *ngFor="let seg of getSegments()">
+        
+        <span *ngIf="!seg.isSpoiler">
+        {{ seg.text }}
+        </span>
+
+        <span *ngIf="seg.isSpoiler"
+            class="spoiler"
+            (click)="spoilersExpanded[seg.spoilerIndex] = !spoilersExpanded[seg.spoilerIndex]">
+        {{ spoilersExpanded[seg.spoilerIndex] ? seg.text : '•••• spoiler ••••' }}
+        </span>
+
+    </ng-container>
+    </div>
+
+    <div class="actions">
+
+    <div class="primary-actions">
+        <app-ui-button
+        [label]="liked() ? '❤️ Liked' : '🤍 Like'"
+        (clicked)="likePost()">
+        </app-ui-button>
+
+        <app-ui-button
+        [label]="bookmarked() ? '🔖 Saved' : 'Save'"
+        (clicked)="bookmarkPost()">
+        </app-ui-button>
+    </div>
+
+    <div class="secondary-actions">
+        <app-ui-button label="Expand All" (clicked)="expandAll()"></app-ui-button>
+        <app-ui-button label="Collapse All" (clicked)="collapseAll()"></app-ui-button>
+        <app-ui-button label="Copy Link" (clicked)="copyLink()"></app-ui-button>
+    </div>
+
+    <div class="danger-actions">
+        <app-ui-button label="Delete" (clicked)="deletePost()"></app-ui-button>
+    </div>
+
+    </div>
+
+  </div>
+</div>

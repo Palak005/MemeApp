@@ -1,0 +1,20 @@
+<div class="overlay">
+  <div class="modal">
+
+    <h2>Create Meme</h2>
+
+    <app-ui-input placeholder="Title (optional)" [(value)]="title" (valueChange)="saveDraft()"></app-ui-input>
+
+    <textarea [(ngModel)]="body" (input)="saveDraft()" placeholder="Write your meme..."></textarea>
+
+    <app-ui-input placeholder="Tags (comma separated)" [(value)]="tagsText" (valueChange)="saveDraft()"></app-ui-input>
+
+    <app-ui-input placeholder="Mood emoji" [(value)]="mood" (valueChange)="saveDraft()"></app-ui-input>
+
+    <div class="actions">
+      <app-ui-button label="Post" (clicked)="submit()"></app-ui-button>
+      <app-ui-button label="Cancel" (clicked)="close.emit()"></app-ui-button>
+    </div>
+
+  </div>
+</div>
